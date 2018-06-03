@@ -19,7 +19,7 @@ https://python-comic-api.herokuapp.com/
 ![alt text](http://res.cloudinary.com/jrleon90/image/upload/v1528004591/login_comic_api.png "Postman example")
   The request has to be made to the following URI
   ```
-  https://python-comic-api.herokuapp.com/login
+ GET https://python-comic-api.herokuapp.com/login
   ```
   Once the request has been made with a valid login information, it returns a token that needs to be save in order to made every request.
   
@@ -27,7 +27,7 @@ https://python-comic-api.herokuapp.com/
 
 Send GET request to
   ```
-  https://python-comic-api.herokuapp.com/comics
+ GET https://python-comic-api.herokuapp.com/comics
   ```
 Since the routes are protected, the user needs to send the token in the header of the request with the key name "x-access-token" (see image)
 ![alt text](http://res.cloudinary.com/jrleon90/image/upload/v1528005242/get_comic_request.png "Postman example")
@@ -39,7 +39,7 @@ The response it would be a JSON object with all the comics inside the DB
 Send POST request with token in the header to:
 
   ```
-  https://python-comic-api.herokuapp.com/comics
+ POST https://python-comic-api.herokuapp.com/comics
   ```
   Inside the body, send JSON object with name of the Comic that the user want to add to the DB (see image for example)
   ![alt text](http://res.cloudinary.com/jrleon90/image/upload/v1528005499/create_comic.png "Postman example")
@@ -51,9 +51,21 @@ Send POST request with token in the header to:
   Send POST request with token in the header to:
 
   ```
-  https://python-comic-api.herokuapp.com/comics/<comic_id>
+ POST https://python-comic-api.herokuapp.com/comics/<comic_id>
   ```
 
   Replace <comic_id> with the Id of the comic that you want to give a Like.
   
   If everything works fine, the API will response with a succesfull messages (the user can use the GET all comics to validate that it works)  
+  
+  5. **CREATE NEW USER**
+  
+  Send POST request to:
+  
+   ```
+ POST https://python-comic-api.herokuapp.com/user
+  ```
+  
+  With the request, send username and password inside the body in JSON format (see image)
+  
+  ![alt text](http://res.cloudinary.com/jrleon90/image/upload/v1528007009/user_create.png "Postman Example")

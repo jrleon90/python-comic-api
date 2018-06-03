@@ -7,8 +7,6 @@ import datetime
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash 
 
-#Connection instance to MySQL Database
-cnx = mysql.connector.connect(user=app.config['MYSQL_DATABASE_USER'],password=app.config['MYSQL_DATABASE_PASSWORD'],host=app.config['MYSQL_DATABASE_HOST'],database=app.config['MYSQL_DATABASE_DB'])
 
 #Function to validate Token
 def token_verification(f):
@@ -53,6 +51,10 @@ def index():
 @app.route('/comics',methods=['GET'])
 @token_verification
 def get_all_comics(current_user):
+    
+    #Connection instance to MySQL Database
+    cnx = mysql.connector.connect(user=app.config['MYSQL_DATABASE_USER'],password=app.config['MYSQL_DATABASE_PASSWORD'],host=app.config['MYSQL_DATABASE_HOST'],database=app.config['MYSQL_DATABASE_DB'])
+
     cursor = cnx.cursor()
    
     query = ('''SELECT * FROM comic_book''')
@@ -77,6 +79,10 @@ def get_all_comics(current_user):
 @app.route('/comics',methods=['POST'])
 @token_verification
 def create_comic(current_user):
+
+    #Connection instance to MySQL Database
+    cnx = mysql.connector.connect(user=app.config['MYSQL_DATABASE_USER'],password=app.config['MYSQL_DATABASE_PASSWORD'],host=app.config['MYSQL_DATABASE_HOST'],database=app.config['MYSQL_DATABASE_DB'])
+
     cursor = cnx.cursor()
     add_comic = ("INSERT INTO comic_book "
             "(name, likes) "
@@ -91,12 +97,19 @@ def create_comic(current_user):
 
     cnx.commit()
 
+    cursor.close()
+    cnx.close()
+
     return jsonify({'message':'Comic added!'})
 
 #Like a comic
 @app.route('/comics/<comic_id>', methods=['POST'])
 @token_verification
 def like_comic(current_user, comic_id):
+
+    #Connection instance to MySQL Database
+    cnx = mysql.connector.connect(user=app.config['MYSQL_DATABASE_USER'],password=app.config['MYSQL_DATABASE_PASSWORD'],host=app.config['MYSQL_DATABASE_HOST'],database=app.config['MYSQL_DATABASE_DB'])
+
     cursor = cnx.cursor() 
     cursorB = cnx.cursor()
 
@@ -112,7 +125,7 @@ def like_comic(current_user, comic_id):
 
     #If there is no comic with the Id specified, abort process and send message
     if cursor.rowcount == 0:
-        return jsonify({'message':'Comic not found'})
+        return make_response('Comic not found', 404)
  
     #If comic is found, Update row
     for likes in data:
@@ -129,6 +142,10 @@ def like_comic(current_user, comic_id):
 #Create a new User
 @app.route('/user',methods=['POST'])
 def create_user():
+
+    #Connection instance to MySQL Database
+    cnx = mysql.connector.connect(user=app.config['MYSQL_DATABASE_USER'],password=app.config['MYSQL_DATABASE_PASSWORD'],host=app.config['MYSQL_DATABASE_HOST'],database=app.config['MYSQL_DATABASE_DB'])
+
     cursor = cnx.cursor()
     add_user = ("INSERT INTO user "
             "(username, password) "
@@ -176,12 +193,19 @@ def login():
 
 #Function to search a user by his/her username
 def search_user(username):
+
+    #Connection instance to MySQL Database
+    cnx = mysql.connector.connect(user=app.config['MYSQL_DATABASE_USER'],password=app.config['MYSQL_DATABASE_PASSWORD'],host=app.config['MYSQL_DATABASE_HOST'],database=app.config['MYSQL_DATABASE_DB'])
+
     cursor = cnx.cursor()
     query = ("SELECT username,password,_id FROM user WHERE username='%s'"%(str(username)))
    
     cursor.execute(query) 
 
     data = cursor.fetchone()
+
+    cursor.close()
+    cnx.close()
 
     return data
 

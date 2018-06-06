@@ -1,6 +1,7 @@
 # Python Comic API
 ## Table of Content
 1. [Introduction](#introduction)
+2. [Installation](#install)
 2. [Live example](#example)
 3. [API Docs](#api_docs)
 
@@ -8,6 +9,11 @@
 
 ## Introduction <a name="introduction"></a>
 This is an API developed with Python using Flask and JWT in order to have secure routes.
+
+## Installation <a name="install"></a>
+  1. Clone this repository
+  2. Run ``` pip install -r requirements.txt ``` in the root directory
+  3. Run ```python myapp.py```
 
 ## Live Example <a name="example"></a>
 There is a Live example for this API deployed in Heroku. In order to start you have to make a request to the following URI 
@@ -41,7 +47,7 @@ Send POST request with token in the header to:
   ```
  POST https://python-comic-api.herokuapp.com/comics
   ```
-  Inside the body, send JSON object with name of the Comic that the user want to add to the DB (see image for example)
+  Inside the body, send a JSON object with the name of the Comic that the user wants to add to the DB (see image for example)
   ![alt text](http://res.cloudinary.com/jrleon90/image/upload/v1528005499/create_comic.png "Postman example")
   
   If everything works fine, the API will response with a succesfull messages (the user can use the GET all comics to validate that it works)
